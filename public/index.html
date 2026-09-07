@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="index.html">Gestión</a></li>
+            <li><a href="catalog.html">Catálogo</a></li>
+        </ul>
+    </nav>
+
+    <h1>Gestión de Libros</h1>
+
+    <form id="itemForm">
+        <input type="text" id="name" placeholder="Nombre del libro" required>
+        <input type="text" id="description" placeholder="Descripción">
+        <input type="number" id="price" placeholder="Precio" min="0" required>
+        <input type="text" id="category" placeholder="Categoría" required>
+        <input type="number" id="cantidad" placeholder="Cantidad" min="0" required>
+        <input type="date" id="fecha" required>
+        <button type="submit" id="submitBtn">Agregar</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Cantidad</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="itemsTable"></tbody>
+    </table>
+
+    <script type="module" src="./js/main.js"></script>
+</body>
+</html>
