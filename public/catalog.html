@@ -1,65 +1,65 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Libros</title>
-    <meta name="theme-color" content="#047857">
-    <link rel="manifest" href="./manifest.webmanifest">
-    <link rel="icon" href="./icons/icon-192.png" type="image/png">
-    <link rel="stylesheet" href="./css/styles.css">
-    <script>
-        try {
-            const guardado = localStorage.getItem("tema");
-            const oscuro = window.matchMedia("(prefers-color-scheme: dark)").matches;
-            if (guardado === "oscuro" || (!guardado && oscuro)) {
-                document.documentElement.classList.add("dark");
-            }
-        } catch (e) {}
-    </script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Catálogo de Libros</title>
+	<meta name="theme-color" content="#047857">
+	<link rel="manifest" href="./manifest.webmanifest">
+	<link rel="icon" href="./icons/icon-192.png" type="image/png">
+	<link rel="stylesheet" href="./css/styles.css">
+	<script>
+		try {
+			const guardado = localStorage.getItem("tema");
+			const oscuro = window.matchMedia("(prefers-color-scheme: dark)").matches;
+			if (guardado === "oscuro" || (!guardado && oscuro)) {
+				document.documentElement.classList.add("dark");
+			}
+		} catch (e) {}
+	</script>
 </head>
 <body>
-    <nav class="navbar">
-        <button id="theme-toggle" class="btn btn-secondary" type="button">Claro / Oscuro</button>
-        <ul>
-            <li><a href="index.html">Gestión</a></li>
-            <li><a href="catalog.html">Catálogo</a></li>
-        </ul>
-    </nav>
+	<nav class="navbar">
+		<button id="theme-toggle" class="btn btn-secondary" type="button">Claro / Oscuro</button>
+		<ul>
+			<li><a href="index.html">Gestión</a></li>
+			<li><a href="catalog.html">Catálogo</a></li>
+		</ul>
+	</nav>
 
-    <h1>Catálogo de Libros</h1>
+	<h1>Catálogo de Libros</h1>
 
-    <div id="offlineBanner" class="offline-banner"></div>
+	<div id="offlineBanner" class="offline-banner"></div>
 
-    <div class="filtros">
-        <label for="searchInput">Buscar</label>
-        <input class="input" type="search" id="searchInput" placeholder="Buscar por nombre o descripción">
-        <label for="categoryFilter">Categoría</label>
-        <select class="input" id="categoryFilter">
-            <option value="">Todas las categorías</option>
-            <option value="Novela">Novela</option>
-            <option value="Infantil">Infantil</option>
-            <option value="Thriller">Thriller</option>
-            <option value="Ciencia Ficción">Ciencia Ficción</option>
-            <option value="Desarrollo Personal">Desarrollo Personal</option>
-            <option value="Historia">Historia</option>
-        </select>
-        <label for="sortSelect">Ordenar</label>
-        <select class="input" id="sortSelect">
-            <option value="">Sin ordenar</option>
-            <option value="precio">Precio: menor a mayor</option>
-        </select>
-    </div>
+	<div class="filtros">
+		<label for="searchInput">Buscar</label>
+		<input class="input" type="search" id="searchInput" placeholder="Buscar por nombre o descripción">
+		<label for="categoryFilter">Categoría</label>
+		<select class="input" id="categoryFilter">
+			<option value="">Todas las categorías</option>
+			<option value="Novela">Novela</option>
+			<option value="Infantil">Infantil</option>
+			<option value="Thriller">Thriller</option>
+			<option value="Ciencia Ficción">Ciencia Ficción</option>
+			<option value="Desarrollo Personal">Desarrollo Personal</option>
+			<option value="Historia">Historia</option>
+		</select>
+		<label for="sortSelect">Ordenar</label>
+		<select class="input" id="sortSelect">
+			<option value="">Sin ordenar</option>
+			<option value="precio">Precio: menor a mayor</option>
+		</select>
+	</div>
 
-    <div id="catalogContainer" class="catalog-grid"></div>
+	<div id="catalogContainer" class="catalog-grid"></div>
 
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <button id="closeModal" class="close" type="button" aria-label="Cerrar detalle">X</button>
-            <div id="modalBody"></div>
-        </div>
-    </div>
+	<div id="modal" class="modal">
+		<div class="modal-content">
+			<button id="closeModal" class="close" type="button" aria-label="Cerrar detalle">X</button>
+			<div id="modalBody"></div>
+		</div>
+	</div>
 
-    <script type="module" src="./js/catalog.js"></script>
+	<script type="module" src="./js/catalog.js"></script>
 </body>
 </html>

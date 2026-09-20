@@ -1,77 +1,77 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Libros</title>
-    <meta name="theme-color" content="#047857">
-    <link rel="manifest" href="./manifest.webmanifest">
-    <link rel="icon" href="./icons/icon-192.png" type="image/png">
-    <link rel="stylesheet" href="./css/styles.css">
-    <script>
-        try {
-            const guardado = localStorage.getItem("tema");
-            const oscuro = window.matchMedia("(prefers-color-scheme: dark)").matches;
-            if (guardado === "oscuro" || (!guardado && oscuro)) {
-                document.documentElement.classList.add("dark");
-            }
-        } catch (e) {}
-    </script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gestión de Libros</title>
+	<meta name="theme-color" content="#047857">
+	<link rel="manifest" href="./manifest.webmanifest">
+	<link rel="icon" href="./icons/icon-192.png" type="image/png">
+	<link rel="stylesheet" href="./css/styles.css">
+	<script>
+		try {
+			const guardado = localStorage.getItem("tema");
+			const oscuro = window.matchMedia("(prefers-color-scheme: dark)").matches;
+			if (guardado === "oscuro" || (!guardado && oscuro)) {
+				document.documentElement.classList.add("dark");
+			}
+		} catch (e) {}
+	</script>
 </head>
 <body>
-    <nav class="navbar">
-        <button id="theme-toggle" class="btn btn-secondary" type="button">Claro / Oscuro</button>
-        <ul>
-            <li><a href="index.html">Gestión</a></li>
-            <li><a href="catalog.html">Catálogo</a></li>
-        </ul>
-    </nav>
+	<nav class="navbar">
+		<button id="theme-toggle" class="btn btn-secondary" type="button">Claro / Oscuro</button>
+		<ul>
+			<li><a href="index.html">Gestión</a></li>
+			<li><a href="catalog.html">Catálogo</a></li>
+		</ul>
+	</nav>
 
-    <h1>Gestión de Libros</h1>
+	<h1>Gestión de Libros</h1>
 
-    <form id="itemForm">
-        <label for="name">Nombre</label>
-        <input class="input" type="text" id="name" placeholder="Nombre del libro" required>
-        <label for="description">Descripción</label>
-        <input class="input" type="text" id="description" placeholder="Descripción">
-        <label for="price">Precio</label>
-        <input class="input" type="number" id="price" placeholder="Precio" min="0" required>
-        <label for="category">Categoría</label>
-        <select class="input" id="category" required>
-            <option value="">Elige una categoría</option>
-            <option value="Novela">Novela</option>
-            <option value="Infantil">Infantil</option>
-            <option value="Thriller">Thriller</option>
-            <option value="Ciencia Ficción">Ciencia Ficción</option>
-            <option value="Desarrollo Personal">Desarrollo Personal</option>
-            <option value="Historia">Historia</option>
-        </select>
-        <label for="cantidad">Cantidad</label>
-        <input class="input" type="number" id="cantidad" placeholder="Cantidad" min="0" required>
-        <label for="fecha">Fecha</label>
-        <input class="input" type="date" id="fecha" required>
-        <p id="formError" class="form-error"></p>
-        <button class="btn" type="submit" id="submitBtn">Agregar</button>
-    </form>
+	<form id="itemForm">
+		<label for="name">Nombre</label>
+		<input class="input" type="text" id="name" placeholder="Nombre del libro" required>
+		<label for="description">Descripción</label>
+		<input class="input" type="text" id="description" placeholder="Descripción">
+		<label for="price">Precio</label>
+		<input class="input" type="number" id="price" placeholder="Precio" min="0" required>
+		<label for="category">Categoría</label>
+		<select class="input" id="category" required>
+			<option value="">Elige una categoría</option>
+			<option value="Novela">Novela</option>
+			<option value="Infantil">Infantil</option>
+			<option value="Thriller">Thriller</option>
+			<option value="Ciencia Ficción">Ciencia Ficción</option>
+			<option value="Desarrollo Personal">Desarrollo Personal</option>
+			<option value="Historia">Historia</option>
+		</select>
+		<label for="cantidad">Cantidad</label>
+		<input class="input" type="number" id="cantidad" placeholder="Cantidad" min="0" required>
+		<label for="fecha">Fecha</label>
+		<input class="input" type="date" id="fecha" required>
+		<p id="formError" class="form-error"></p>
+		<button class="btn" type="submit" id="submitBtn">Agregar</button>
+	</form>
 
-    <div class="table-wrap">
-    <table>
-        <thead>
-            <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Precio</th>
-            <th>Categoría</th>
-            <th>Cantidad</th>
-            <th>Fecha</th>
-            <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody id="itemsTable"></tbody>
-    </table>
-    </div>
+	<div class="table-wrap">
+	<table>
+		<thead>
+			<tr>
+			<th>ID</th>
+			<th>Nombre</th>
+			<th>Descripción</th>
+			<th>Precio</th>
+			<th>Categoría</th>
+			<th>Cantidad</th>
+			<th>Fecha</th>
+			<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody id="itemsTable"></tbody>
+	</table>
+	</div>
 
-    <script type="module" src="./js/main.js"></script>
+	<script type="module" src="./js/main.js"></script>
 </body>
 </html>
