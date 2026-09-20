@@ -246,3 +246,21 @@ form label {
 .dark .skeleton {
   background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
 }
+
+.offline-banner {
+  display: none;
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.offline-banner.show {
+  display: block;
+}
+
+.dark .offline-banner {
+  background: #451a03;
+  color: #fde68a;
+}

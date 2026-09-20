@@ -9,8 +9,24 @@ const sortSelect = document.getElementById("sortSelect");
 const modal = document.getElementById("modal");
 const modalBody = document.getElementById("modalBody");
 const closeModal = document.getElementById("closeModal");
+const offlineBanner = document.getElementById("offlineBanner");
 
 initTheme("theme-toggle");
+
+function guardarCache(items) {
+    try {
+        localStorage.setItem("librosCache", JSON.stringify(items));
+    } catch (e) {}
+}
+
+function leerCache() {
+    try {
+        const texto = localStorage.getItem("librosCache");
+        return texto ? JSON.parse(texto) : null;
+    } catch (e) {
+        return null;
+    }
+}
 
 async function loadCatalog() {
     showCatalogLoading(catalogContainer);
@@ -20,6 +36,8 @@ async function loadCatalog() {
         if (categoryFilter.value) filtros.categoria = categoryFilter.value;
         if (sortSelect.value) filtros.sort = sortSelect.value;
         const items = await getItems(filtros);
+        guardarCache(items);
+        offlineBanner.classList.remove("show");
         if (items.length === 0) {
             const buscando = searchInput.value !== "" || categoryFilter.value !== "";
             showCatalogEmpty(catalogContainer, buscando);
@@ -28,7 +46,14 @@ async function loadCatalog() {
         renderCatalog(items, catalogContainer);
     } catch (err) {
         console.error("Error cargando catalogo:", err);
-        showCatalogError(catalogContainer);
+        const guardados = leerCache();
+        if (guardados && guardados.length > 0) {
+            renderCatalog(guardados, catalogContainer);
+            offlineBanner.textContent = "Sin conexión — mostrando datos guardados";
+            offlineBanner.classList.add("show");
+        } else {
+            showCatalogError(catalogContainer);
+        }
     }
 }
 

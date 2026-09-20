@@ -19,26 +19,35 @@ export async function getItem(id) {
 }
 
 export async function createItem(data) {
+    if (!navigator.onLine) throw new Error("No disponible sin conexión");
     const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     });
-    if (!res.ok) throw new Error("Error al crear item");
+    if (!res.ok) {
+        const error = await res.json().catch(() => ({}));
+        throw new Error((error.errors && error.errors.join(" ")) || "Error al crear item");
+    }
     return res.json();
 }
 
 export async function updateItem(id, data) {
+    if (!navigator.onLine) throw new Error("No disponible sin conexión");
     const res = await fetch(`${API_URL}/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     });
-    if (!res.ok) throw new Error("Error al actualizar item");
+    if (!res.ok) {
+        const error = await res.json().catch(() => ({}));
+        throw new Error((error.errors && error.errors.join(" ")) || "Error al actualizar item");
+    }
     return res.json();
 }
 
 export async function deleteItem(id) {
+    if (!navigator.onLine) throw new Error("No disponible sin conexión");
     const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
     if (!res.ok) throw new Error("Error al eliminar item");
     return res.json();

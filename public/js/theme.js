@@ -19,10 +19,17 @@ export function aplicarTema(tema) {
 
 export function initTheme(idBoton) {
     aplicarTema(obtenerTema());
+    registrarSW();
     const boton = document.getElementById(idBoton);
     if (!boton) return;
     boton.addEventListener("click", () => {
         const oscuro = document.documentElement.classList.toggle("dark");
         localStorage.setItem("tema", oscuro ? "oscuro" : "claro");
     });
+}
+
+function registrarSW() {
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+    }
 }

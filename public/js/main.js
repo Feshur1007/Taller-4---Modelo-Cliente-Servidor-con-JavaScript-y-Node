@@ -22,7 +22,7 @@ tableBody.addEventListener("click", async (e) => {
             loadItems();
         } catch (err) {
             console.error("Error eliminando:", err);
-            alert("No se pudo eliminar el item.");
+            errorBox.textContent = err.message;
         }
     } else if (btn.classList.contains("btn-edit")) {
         try {
@@ -74,7 +74,7 @@ form.addEventListener("submit", async (e) => {
         loadItems();
     } catch (err) {
         console.error("Error guardando item:", err);
-        errorBox.textContent = "No se pudo guardar el item.";
+        errorBox.textContent = err.message;
     }
 });
 
