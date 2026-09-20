@@ -1,44 +1,22 @@
-const http = require("http");
-const fs = require("fs/promises");
-const path = require("path");
-const handleItemsRoutes = require("./routes/items");
+import "dotenv/config";
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+import itemsRoutes from "./routes/items.js";
+import { notFoundHandler, globalErrorHandler } from "./middlewares/errorHandler.js";
 
-const PORT = 3000;
-const PUBLIC_PATH = path.join(__dirname, "..", "public");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const MIME_TYPES = {
-    ".html": "text/html",
-    ".css": "text/css",
-    ".js": "text/javascript",
-    ".json": "application/json",
-    ".png": "image/png",
-    ".jpeg": "image/jpeg",
-    ".gif": "image/gif"
-};
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-const server = http.createServer(async (req, res) => {
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "..", "public")));
+app.use("/api/items", itemsRoutes);
+app.use(notFoundHandler);
+app.use(globalErrorHandler);
 
-    if (handleItemsRoutes(req, res)) return;
-
-    try {
-        const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
-        let pathname = parsedUrl.pathname === "/" ? "/index.html" : parsedUrl.pathname;
-        const ext = path.extname(pathname);
-        const fullPath = path.join(PUBLIC_PATH, pathname);
-        const contentType = MIME_TYPES[ext] || "text/plain";
-        const content = await fs.readFile(fullPath);
-
-        res.writeHead(200, { "Content-Type": contentType });
-        res.end(content);
-    } catch (err) {
-        const statusCode = err.code === "ENOENT" ? 404 : err.statusCode || 500;
-
-        res.writeHead(statusCode, { "Content-Type": "text/plain" });
-        res.end(`${statusCode} - ${err.message}`);
-    }
-});
-
-server.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

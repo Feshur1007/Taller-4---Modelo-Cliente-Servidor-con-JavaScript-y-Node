@@ -1,0 +1,21 @@
+{
+  "name": "taller-4-modelo-cliente-servidor-con-javascript-y-node",
+  "version": "1.0.0",
+  "description": "Tienda de Libros: aplicacion con Node.js y Express que implementa un CRUD de libros.",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "Darwin Andres Saavedra",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}

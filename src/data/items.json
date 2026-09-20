@@ -16,5 +16,59 @@
     "category": "Infantil",
     "cantidad": 15,
     "fecha": "1943-04-06"
+  },
+  {
+    "id": 3,
+    "name": "La odisea",
+    "description": "Poema epico atribuido a Homero que relata el regreso de Odiseo a Itaca tras la guerra de Troya.",
+    "price": 150000,
+    "category": "Novela",
+    "cantidad": 2,
+    "fecha": "2021-03-10"
+  },
+  {
+    "id": 4,
+    "name": "El psicoanalista",
+    "description": "Thriller psicologico sobre la venganza de un misterioso paciente contra su terapeuta.",
+    "price": 55000,
+    "category": "Thriller",
+    "cantidad": 7,
+    "fecha": "2002-09-01"
+  },
+  {
+    "id": 5,
+    "name": "Fahrenheit 451",
+    "description": "Distopia de Ray Bradbury donde los libros estan prohibidos y los bomberos los queman.",
+    "price": 42000,
+    "category": "Ciencia Ficción",
+    "cantidad": 8,
+    "fecha": "1953-10-19"
+  },
+  {
+    "id": 6,
+    "name": "Habitos atomicos",
+    "description": "Guia practica para crear buenos habitos y romper los malos con pequeños cambios diarios.",
+    "price": 65000,
+    "category": "Desarrollo Personal",
+    "cantidad": 12,
+    "fecha": "2018-10-16"
+  },
+  {
+    "id": 7,
+    "name": "Dune",
+    "description": "Epica novela de ciencia ficcion ambientada en un peligroso planeta desertico.",
+    "price": 70000,
+    "category": "Ciencia Ficción",
+    "cantidad": 5,
+    "fecha": "1965-08-01"
+  },
+  {
+    "id": 8,
+    "name": "Sapiens: de animales a dioses",
+    "description": "Recorrido por la historia de la humanidad desde los primeros humanos hasta hoy.",
+    "price": 68000,
+    "category": "Historia",
+    "cantidad": 9,
+    "fecha": "2014-09-04"
   }
 ]
