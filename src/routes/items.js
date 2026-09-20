@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { Router } from "express";
+import { validateItem } from "../middlewares/validate.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,7 +31,7 @@ router.get("/:id", (req, res) => {
     res.json(item);
 });
 
-router.post("/", (req, res) => {
+router.post("/", validateItem, (req, res) => {
     const items = readData();
     const nuevo = req.body;
     nuevo.id = Date.now();
@@ -39,7 +40,7 @@ router.post("/", (req, res) => {
     res.status(201).json(nuevo);
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", validateItem, (req, res) => {
     const id = parseInt(req.params.id);
     let items = readData();
     const idx = items.findIndex(i => i.id === id);
