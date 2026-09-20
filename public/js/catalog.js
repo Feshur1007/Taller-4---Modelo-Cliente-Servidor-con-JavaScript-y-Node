@@ -1,4 +1,5 @@
 import { getItems, getItem } from "./services/api.js";
+import { initTheme } from "./theme.js";
 
 const catalogContainer = document.getElementById("catalogContainer");
 const searchInput = document.getElementById("searchInput");
@@ -7,6 +8,8 @@ const sortSelect = document.getElementById("sortSelect");
 const modal = document.getElementById("modal");
 const modalBody = document.getElementById("modalBody");
 const closeModal = document.getElementById("closeModal");
+
+initTheme("theme-toggle");
 
 async function loadCatalog() {
     try {

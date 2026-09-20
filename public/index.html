@@ -5,9 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión</title>
     <link rel="stylesheet" href="./css/styles.css">
+    <script>
+        try {
+            const guardado = localStorage.getItem("tema");
+            const oscuro = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            if (guardado === "oscuro" || (!guardado && oscuro)) {
+                document.documentElement.classList.add("dark");
+            }
+        } catch (e) {}
+    </script>
 </head>
 <body>
     <nav class="navbar">
+        <button id="theme-toggle" class="btn btn-secondary" type="button">Claro / Oscuro</button>
         <ul>
             <li><a href="index.html">Gestión</a></li>
             <li><a href="catalog.html">Catálogo</a></li>

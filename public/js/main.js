@@ -1,10 +1,13 @@
 import { getItems, getItem, createItem, updateItem, deleteItem } from "./services/api.js";
 import { renderItems, resetForm, fillForm } from "./ui/ui.js";
+import { initTheme } from "./theme.js";
 
 const form = document.getElementById("itemForm");
 const tableBody = document.getElementById("itemsTable");
 const submitBtn = document.getElementById("submitBtn");
 let editingId = null;
+
+initTheme("theme-toggle");
 
 tableBody.addEventListener("click", async (e) => {
     const btn = e.target.closest("button");
