@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión</title>
+    <title>Gestión de Libros</title>
     <link rel="stylesheet" href="./css/styles.css">
     <script>
         try {
@@ -27,15 +27,31 @@
     <h1>Gestión de Libros</h1>
 
     <form id="itemForm">
-        <input type="text" id="name" placeholder="Nombre del libro" required>
-        <input type="text" id="description" placeholder="Descripción">
-        <input type="number" id="price" placeholder="Precio" min="0" required>
-        <input type="text" id="category" placeholder="Categoría" required>
-        <input type="number" id="cantidad" placeholder="Cantidad" min="0" required>
-        <input type="date" id="fecha" required>
-        <button type="submit" id="submitBtn">Agregar</button>
+        <label for="name">Nombre</label>
+        <input class="input" type="text" id="name" placeholder="Nombre del libro" required>
+        <label for="description">Descripción</label>
+        <input class="input" type="text" id="description" placeholder="Descripción">
+        <label for="price">Precio</label>
+        <input class="input" type="number" id="price" placeholder="Precio" min="0" required>
+        <label for="category">Categoría</label>
+        <select class="input" id="category" required>
+            <option value="">Elige una categoría</option>
+            <option value="Novela">Novela</option>
+            <option value="Infantil">Infantil</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Ciencia Ficción">Ciencia Ficción</option>
+            <option value="Desarrollo Personal">Desarrollo Personal</option>
+            <option value="Historia">Historia</option>
+        </select>
+        <label for="cantidad">Cantidad</label>
+        <input class="input" type="number" id="cantidad" placeholder="Cantidad" min="0" required>
+        <label for="fecha">Fecha</label>
+        <input class="input" type="date" id="fecha" required>
+        <p id="formError" class="form-error"></p>
+        <button class="btn" type="submit" id="submitBtn">Agregar</button>
     </form>
 
+    <div class="table-wrap">
     <table>
         <thead>
             <tr>
@@ -51,6 +67,7 @@
         </thead>
         <tbody id="itemsTable"></tbody>
     </table>
+    </div>
 
     <script type="module" src="./js/main.js"></script>
 </body>

@@ -210,3 +210,39 @@ th, td {
   font-weight: bold;
   cursor: pointer;
 }
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.filtros label {
+  font-weight: bold;
+}
+
+form label {
+  display: block;
+  font-weight: bold;
+  margin: 8px 0 2px 0;
+}
+
+.form-error {
+  color: #b91c1c;
+  min-height: 1.2em;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.skeleton {
+  min-height: 120px;
+  background: linear-gradient(90deg, #e5e5e5 25%, #f5f5f5 50%, #e5e5e5 75%);
+}
+
+.dark .skeleton {
+  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+}

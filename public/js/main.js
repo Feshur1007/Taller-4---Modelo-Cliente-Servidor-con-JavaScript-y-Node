@@ -5,6 +5,7 @@ import { initTheme } from "./theme.js";
 const form = document.getElementById("itemForm");
 const tableBody = document.getElementById("itemsTable");
 const submitBtn = document.getElementById("submitBtn");
+const errorBox = document.getElementById("formError");
 let editingId = null;
 
 initTheme("theme-toggle");
@@ -50,14 +51,16 @@ form.addEventListener("submit", async (e) => {
     const fecha = form.querySelector("#fecha").value;
 
     if (!name) {
-        alert("El campo nombre es obligatorio");
+        errorBox.textContent = "El campo nombre es obligatorio";
         return;
     }
 
     if (!price || !category || isNaN(cantidad) || !fecha) {
-        alert("Los campos precio, categoria, cantidad y fecha son obligatorios");
+        errorBox.textContent = "Los campos precio, categoria, cantidad y fecha son obligatorios";
         return;
     }
+
+    errorBox.textContent = "";
 
     try {
         if (editingId) {
@@ -71,7 +74,7 @@ form.addEventListener("submit", async (e) => {
         loadItems();
     } catch (err) {
         console.error("Error guardando item:", err);
-        alert("No se pudo guardar el item.");
+        errorBox.textContent = "No se pudo guardar el item.";
     }
 });
 

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo</title>
+    <title>Catálogo de Libros</title>
     <link rel="stylesheet" href="./css/styles.css">
     <script>
         try {
@@ -27,8 +27,10 @@
     <h1>Catálogo de Libros</h1>
 
     <div class="filtros">
-        <input type="search" id="searchInput" placeholder="Buscar por nombre o descripción">
-        <select id="categoryFilter">
+        <label for="searchInput">Buscar</label>
+        <input class="input" type="search" id="searchInput" placeholder="Buscar por nombre o descripción">
+        <label for="categoryFilter">Categoría</label>
+        <select class="input" id="categoryFilter">
             <option value="">Todas las categorías</option>
             <option value="Novela">Novela</option>
             <option value="Infantil">Infantil</option>
@@ -37,7 +39,8 @@
             <option value="Desarrollo Personal">Desarrollo Personal</option>
             <option value="Historia">Historia</option>
         </select>
-        <select id="sortSelect">
+        <label for="sortSelect">Ordenar</label>
+        <select class="input" id="sortSelect">
             <option value="">Sin ordenar</option>
             <option value="precio">Precio: menor a mayor</option>
         </select>
@@ -47,7 +50,7 @@
 
     <div id="modal" class="modal">
         <div class="modal-content">
-            <span id="closeModal" class="close">X</span>
+            <button id="closeModal" class="close" type="button" aria-label="Cerrar detalle">X</button>
             <div id="modalBody"></div>
         </div>
     </div>
