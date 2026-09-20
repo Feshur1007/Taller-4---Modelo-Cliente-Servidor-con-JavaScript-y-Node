@@ -16,6 +16,23 @@
 
     <h1>Catálogo de Libros</h1>
 
+    <div class="filtros">
+        <input type="search" id="searchInput" placeholder="Buscar por nombre o descripción">
+        <select id="categoryFilter">
+            <option value="">Todas las categorías</option>
+            <option value="Novela">Novela</option>
+            <option value="Infantil">Infantil</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Ciencia Ficción">Ciencia Ficción</option>
+            <option value="Desarrollo Personal">Desarrollo Personal</option>
+            <option value="Historia">Historia</option>
+        </select>
+        <select id="sortSelect">
+            <option value="">Sin ordenar</option>
+            <option value="precio">Precio: menor a mayor</option>
+        </select>
+    </div>
+
     <div id="catalogContainer" class="catalog-grid"></div>
 
     <div id="modal" class="modal">

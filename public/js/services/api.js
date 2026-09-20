@@ -1,7 +1,13 @@
 const API_URL = "/api/items";
 
-export async function getItems() {
-    const res = await fetch(API_URL);
+export async function getItems(filtros = {}) {
+    const params = new URLSearchParams();
+    if (filtros.q) params.set("q", filtros.q);
+    if (filtros.categoria) params.set("categoria", filtros.categoria);
+    if (filtros.sort) params.set("sort", filtros.sort);
+    const query = params.toString();
+    const url = query ? API_URL + "?" + query : API_URL;
+    const res = await fetch(url);
     if (!res.ok) throw new Error("Error al cargar items");
     return res.json();
 }

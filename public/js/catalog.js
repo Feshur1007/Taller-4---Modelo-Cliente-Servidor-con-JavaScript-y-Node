@@ -1,13 +1,20 @@
 import { getItems, getItem } from "./services/api.js";
 
 const catalogContainer = document.getElementById("catalogContainer");
+const searchInput = document.getElementById("searchInput");
+const categoryFilter = document.getElementById("categoryFilter");
+const sortSelect = document.getElementById("sortSelect");
 const modal = document.getElementById("modal");
 const modalBody = document.getElementById("modalBody");
 const closeModal = document.getElementById("closeModal");
 
 async function loadCatalog() {
     try {
-        const items = await getItems();
+        const filtros = {};
+        if (searchInput.value) filtros.q = searchInput.value;
+        if (categoryFilter.value) filtros.categoria = categoryFilter.value;
+        if (sortSelect.value) filtros.sort = sortSelect.value;
+        const items = await getItems(filtros);
         catalogContainer.innerHTML = "";
         items.forEach(item => renderItem(item));
     } catch (err) {
@@ -53,6 +60,10 @@ async function openModal(id) {
 closeModal.addEventListener("click", () => {
     modal.style.display = "none";
 });
+
+searchInput.addEventListener("input", loadCatalog);
+categoryFilter.addEventListener("change", loadCatalog);
+sortSelect.addEventListener("change", loadCatalog);
 
 window.addEventListener("click", (e) => {
     if (e.target === modal) {

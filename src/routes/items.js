@@ -19,7 +19,30 @@ function writeData(data) {
 }
 
 router.get("/", (req, res) => {
-    res.json(readData());
+    const q = req.query.q;
+    const categoria = req.query.categoria;
+    const sort = req.query.sort;
+    let resultados = readData();
+
+    if (q) {
+        const texto = q.toLowerCase();
+        resultados = resultados.filter(item =>
+            item.name.toLowerCase().includes(texto) ||
+            (item.description || "").toLowerCase().includes(texto)
+        );
+    }
+
+    if (categoria) {
+        resultados = resultados.filter(item =>
+            item.category.toLowerCase() === categoria.toLowerCase()
+        );
+    }
+
+    if (sort === "precio") {
+        resultados = resultados.slice().sort((a, b) => a.price - b.price);
+    }
+
+    res.json(resultados);
 });
 
 router.get("/:id", (req, res) => {
