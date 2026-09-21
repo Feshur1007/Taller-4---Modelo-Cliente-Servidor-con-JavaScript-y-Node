@@ -25,6 +25,8 @@
 			<li><a href="index.html">Gestión</a></li>
 			<li><a href="catalog.html">Catálogo</a></li>
 		</ul>
+		<span id="offlineBadge" class="badge" hidden>Sin conexión</span>
+		<button id="installBtn" class="btn btn-secondary" type="button" hidden>Instalar app</button>
 	</nav>
 
 	<h1>Gestión de Libros</h1>
@@ -52,6 +54,7 @@
 		<input class="input" type="date" id="fecha" required>
 		<p id="formError" class="form-error"></p>
 		<button class="btn" type="submit" id="submitBtn">Agregar</button>
+		<button class="btn btn-secondary" type="button" id="cancelBtn" hidden>Cancelar</button>
 	</form>
 
 	<div class="table-wrap">
@@ -73,5 +76,6 @@
 	</div>
 
 	<script type="module" src="./js/main.js"></script>
+	<script type="module" src="./js/pwa.js"></script>
 </body>
 </html>

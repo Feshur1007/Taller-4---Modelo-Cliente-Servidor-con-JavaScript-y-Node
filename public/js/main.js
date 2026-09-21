@@ -1,14 +1,20 @@
 import { getItems, getItem, createItem, updateItem, deleteItem } from "./services/api.js";
-import { renderItems, resetForm, fillForm } from "./ui/ui.js";
+import { renderItems, resetForm, fillForm, showToast } from "./ui/ui.js";
 import { initTheme } from "./theme.js";
 
 const form = document.getElementById("itemForm");
 const tableBody = document.getElementById("itemsTable");
 const submitBtn = document.getElementById("submitBtn");
+const cancelBtn = document.getElementById("cancelBtn");
 const errorBox = document.getElementById("formError");
 let editingId = null;
 
 initTheme("theme-toggle");
+
+function stopEditing() {
+	editingId = null;
+	resetForm(form, submitBtn, cancelBtn);
+}
 
 tableBody.addEventListener("click", async (e) => {
 	const btn = e.target.closest("button");
@@ -19,32 +25,35 @@ tableBody.addEventListener("click", async (e) => {
 	if (btn.classList.contains("btn-delete")) {
 		try {
 			await deleteItem(id);
+			if (editingId === id) stopEditing();
+			showToast("Libro eliminado", "success");
 			loadItems();
 		} catch (err) {
 			console.error("Error eliminando:", err);
-			errorBox.textContent = err.message;
+			showToast(err.message);
 		}
 	} else if (btn.classList.contains("btn-edit")) {
 		try {
 			if (editingId === id) {
-				resetForm(form, submitBtn);
-				editingId = null;
+				stopEditing();
 				return;
 			}
 			const item = await getItem(id);
-			fillForm(form, item, submitBtn);
+			fillForm(form, item, submitBtn, cancelBtn);
 			editingId = id;
 		} catch (err) {
 			console.error("Error cargando item:", err);
-			alert("No se pudo cargar el item para edición.");
+			showToast(err.message);
 		}
 	}
 });
 
+cancelBtn.addEventListener("click", stopEditing);
+
 form.addEventListener("submit", async (e) => {
 	e.preventDefault();
-	const name = form.querySelector("#name").value;
-	const description = form.querySelector("#description").value;
+	const name = form.querySelector("#name").value.trim();
+	const description = form.querySelector("#description").value.trim();
 	const price = Number(form.querySelector("#price").value);
 	const category = form.querySelector("#category").value;
 	const cantidad = Number(form.querySelector("#cantidad").value);
@@ -65,16 +74,17 @@ form.addEventListener("submit", async (e) => {
 	try {
 		if (editingId) {
 			await updateItem(editingId, { name, description, price, category, cantidad, fecha });
-			editingId = null;
+			showToast("Cambios guardados", "success");
 		} else {
 			await createItem({ name, description, price, category, cantidad, fecha });
+			showToast("Libro agregado", "success");
 		}
 
-		resetForm(form, submitBtn);
+		stopEditing();
 		loadItems();
 	} catch (err) {
 		console.error("Error guardando item:", err);
-		errorBox.textContent = err.message;
+		showToast(err.message);
 	}
 });
 
@@ -84,7 +94,7 @@ async function loadItems() {
 		renderItems(items, tableBody);
 	} catch (err) {
 		console.error("Error cargando lista:", err);
-		alert("No se pudieron cargar los items.");
+		showToast(err.message);
 	}
 }
 

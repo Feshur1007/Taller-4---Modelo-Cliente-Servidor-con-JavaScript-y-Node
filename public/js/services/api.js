@@ -1,54 +1,56 @@
 const API_URL = "/api/items";
+const JSON_HEADERS = { "Content-Type": "application/json" };
 
-export async function getItems(filtros = {}) {
+async function request(url, options) {
+	const res = await fetch(url, options);
+	if (!res.ok) {
+		let message = "Error " + res.status;
+		try {
+			const body = await res.json();
+			if (body.errors) message = body.errors.join(" ");
+			else if (body.error) message = body.error;
+		} catch (e) {}
+		throw new Error(message);
+	}
+	return res.json();
+}
+
+function offline() {
+	throw new Error("No disponible sin conexión");
+}
+
+export function getItems(filtros = {}) {
 	const params = new URLSearchParams();
 	if (filtros.q) params.set("q", filtros.q);
 	if (filtros.categoria) params.set("categoria", filtros.categoria);
 	if (filtros.sort) params.set("sort", filtros.sort);
 	const query = params.toString();
-	const url = query ? API_URL + "?" + query : API_URL;
-	const res = await fetch(url);
-	if (!res.ok) throw new Error("Error al cargar items");
-	return res.json();
+	return request(query ? API_URL + "?" + query : API_URL);
 }
 
-export async function getItem(id) {
-	const res = await fetch(`${API_URL}/${id}`);
-	if (!res.ok) throw new Error("Item no encontrado");
-	return res.json();
+export function getItem(id) {
+	return request(API_URL + "/" + id);
 }
 
-export async function createItem(data) {
-	if (!navigator.onLine) throw new Error("No disponible sin conexión");
-	const res = await fetch(API_URL, {
+export function createItem(data) {
+	if (!navigator.onLine) offline();
+	return request(API_URL, {
 		method: "POST",
-		headers: { "Content-Type": "application/json" },
+		headers: JSON_HEADERS,
 		body: JSON.stringify(data)
 	});
-	if (!res.ok) {
-		const error = await res.json().catch(() => ({}));
-		throw new Error((error.errors && error.errors.join(" ")) || "Error al crear item");
-	}
-	return res.json();
 }
 
-export async function updateItem(id, data) {
-	if (!navigator.onLine) throw new Error("No disponible sin conexión");
-	const res = await fetch(`${API_URL}/${id}`, {
+export function updateItem(id, data) {
+	if (!navigator.onLine) offline();
+	return request(API_URL + "/" + id, {
 		method: "PUT",
-		headers: { "Content-Type": "application/json" },
+		headers: JSON_HEADERS,
 		body: JSON.stringify(data)
 	});
-	if (!res.ok) {
-		const error = await res.json().catch(() => ({}));
-		throw new Error((error.errors && error.errors.join(" ")) || "Error al actualizar item");
-	}
-	return res.json();
 }
 
-export async function deleteItem(id) {
-	if (!navigator.onLine) throw new Error("No disponible sin conexión");
-	const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-	if (!res.ok) throw new Error("Error al eliminar item");
-	return res.json();
+export function deleteItem(id) {
+	if (!navigator.onLine) offline();
+	return request(API_URL + "/" + id, { method: "DELETE" });
 }

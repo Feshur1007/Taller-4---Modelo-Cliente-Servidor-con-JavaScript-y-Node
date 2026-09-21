@@ -1,28 +1,23 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 import { Router } from "express";
+import { getAllItems, findItem, insertItem, modifyItem, removeItem } from "../db/db.js";
 import { validateItem } from "../middlewares/validate.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const DATA_PATH = path.join(__dirname, "..", "data", "items.json");
 
 const router = Router();
 
-function readData() {
-	return JSON.parse(fs.readFileSync(DATA_PATH, "utf8"));
-}
-
-function writeData(data) {
-	fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2));
-}
+router.param("id", (req, res, next, value) => {
+	const id = Number(value);
+	if (!Number.isInteger(id)) {
+		return res.status(400).json({ error: "El id debe ser un número entero" });
+	}
+	req.itemId = id;
+	next();
+});
 
 router.get("/", (req, res) => {
 	const q = req.query.q;
 	const categoria = req.query.categoria;
 	const sort = req.query.sort;
-	let resultados = readData();
+	let resultados = getAllItems();
 
 	if (q) {
 		const texto = q.toLowerCase();
@@ -46,8 +41,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-	const id = parseInt(req.params.id);
-	const item = readData().find(i => i.id === id);
+	const item = findItem(req.itemId);
 	if (!item) {
 		return res.status(404).json({ error: "No encontrado" });
 	}
@@ -55,40 +49,38 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", validateItem, (req, res) => {
-	const items = readData();
-	const nuevo = req.body;
-	nuevo.id = Date.now();
-	items.push(nuevo);
-	writeData(items);
+	const nuevo = insertItem({
+		name: req.body.name.trim(),
+		description: req.body.description || "",
+		price: req.body.price,
+		category: req.body.category,
+		cantidad: req.body.cantidad !== undefined ? Number(req.body.cantidad) : 0,
+		fecha: req.body.fecha || ""
+	});
 	res.status(201).json(nuevo);
 });
 
 router.put("/:id", validateItem, (req, res) => {
-	const id = parseInt(req.params.id);
-	let items = readData();
-	const idx = items.findIndex(i => i.id === id);
-
-	if (idx >= 0) {
-		const updated = { ...items[idx], ...req.body, id };
-		items[idx] = updated;
-		writeData(items);
-		res.json(updated);
-	} else {
-		res.status(404).json({ error: "No encontrado" });
+	const actualizado = modifyItem(req.itemId, {
+		name: req.body.name.trim(),
+		description: req.body.description || "",
+		price: req.body.price,
+		category: req.body.category,
+		cantidad: req.body.cantidad !== undefined ? Number(req.body.cantidad) : 0,
+		fecha: req.body.fecha || ""
+	});
+	if (!actualizado) {
+		return res.status(404).json({ error: "No encontrado" });
 	}
+	res.json(actualizado);
 });
 
 router.delete("/:id", (req, res) => {
-	const id = parseInt(req.params.id);
-	let items = readData();
-	const newItems = items.filter(i => i.id !== id);
-
-	if (newItems.length !== items.length) {
-		writeData(newItems);
-		res.json({ mensaje: "Eliminado" });
-	} else {
-		res.status(404).json({ error: "No fue encontrado" });
+	const eliminado = removeItem(req.itemId);
+	if (!eliminado) {
+		return res.status(404).json({ error: "No fue encontrado" });
 	}
+	res.json({ mensaje: "Eliminado", id: req.itemId });
 });
 
 export default router;

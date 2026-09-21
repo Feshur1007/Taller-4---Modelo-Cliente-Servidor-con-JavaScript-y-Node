@@ -1,5 +1,5 @@
 import { getItems, getItem } from "./services/api.js";
-import { renderCatalog, showCatalogLoading, showCatalogEmpty, showCatalogError, showItemModal, hideItemModal } from "./ui/ui.js";
+import { renderCatalog, showCatalogLoading, showCatalogEmpty, showCatalogError, showItemModal, hideItemModal, showToast } from "./ui/ui.js";
 import { initTheme } from "./theme.js";
 
 const catalogContainer = document.getElementById("catalogContainer");
@@ -63,7 +63,7 @@ async function openModal(id) {
 		showItemModal(modal, modalBody, item);
 	} catch (err) {
 		console.error("Error cargando detalle:", err);
-		alert("No se pudo cargar el detalle del libro.");
+		showToast("No se pudo cargar el detalle del libro.");
 	}
 }
 
